@@ -30,7 +30,7 @@ public class TesteCampoTreinamento {
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("teste\naaaaa");
 //		Assert.assertEquals("teste", driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
-		driver.close();
+		driver.quit();
 	}
 	
 	@Test
@@ -60,7 +60,7 @@ public class TesteCampoTreinamento {
 //		combo.selectByValue("superior");
 		combo.selectByVisibleText("2o grau completo");
 		Assert.assertEquals("2o grau completo", combo.getFirstSelectedOption().getText());
-		driver.close();
+		driver.quit();
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class TesteCampoTreinamento {
 			}
 		}
 		Assert.assertTrue(encontrou);
-		driver.close();
+		driver.quit();
 	}
 	
 	@Test
@@ -99,6 +99,30 @@ public class TesteCampoTreinamento {
 		
 		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
 		Assert.assertEquals(3, allSelectedOptions.size());
+		
+		combo.deselectByVisibleText("Corrida");
+		allSelectedOptions = combo.getAllSelectedOptions();
+		Assert.assertEquals(2, allSelectedOptions.size());
+		
+		driver.quit();
+	}
+	
+	@Test
+	public void deveInterarirComBotoes () {
+		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		String caminhoHtml = System.getProperty("user.dir") + "/src/main/resources/componentes.html";
+		driver.get(caminhoHtml);
+		
+//		Fiz de 2 maneiras diferentes, segue os testes:
+		
+//		driver.findElement(By.id("buttonSimple")).click();
+//		Assert.assertEquals("Obrigado!", driver.findElement(By.id("buttonSimple")).getAttribute("value"));
+		
+		WebElement botao = driver.findElement(By.id("buttonSimple"));
+		botao.click();
+		Assert.assertEquals("Obrigado", botao.getAttribute("value"));
 		driver.quit();
 	}
 }
