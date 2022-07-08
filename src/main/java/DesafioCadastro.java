@@ -9,6 +9,7 @@ public class DesafioCadastro {
 
 	private WebDriver driver;
 	private DSL dsl;
+	private CampoTreinamentoPage page;
 
 	@Before
 	public void inicializa() {
@@ -17,6 +18,7 @@ public class DesafioCadastro {
 		driver.manage().window().maximize();
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 
 	@After
@@ -26,14 +28,14 @@ public class DesafioCadastro {
 
 	@Test
 	public void cadastroUsuario() throws InterruptedException {
-		dsl.escreve("elementosForm:nome", "Danilo");
-		dsl.escreve("elementosForm:sobrenome", "Dantas");
-		dsl.clicaRadio("elementosForm:sexo:0");
-		dsl.clicaRadio("elementosForm:comidaFavorita:0");
-		dsl.selecionarCombo("elementosForm:escolaridade", "Superior");
-		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
-		dsl.escreve("elementosForm:sugestoes", "Criar novas atualizações dessa páginas :P");
-		dsl.clicarBotao("elementosForm:cadastrar");
-		Assert.assertEquals("Cadastrado!", dsl.obterTexto("resultado").startsWith("Cadastrado!"));
+		page.setNome("Danilo");
+		page.setSobrenome("Dantas");
+		page.setSexoMasculino();
+		page.setComidaPizza();
+		page.setEscolaridade("Superior");
+		page.setEscolaridade("Natacao");
+		page.setSugestao("Criar novas atualizações dessa páginas :P");
+		page.cadastrar();
+		Assert.assertEquals("Cadastrado!", page.obterResultado().startsWith("Cadastrado!"));
 	}
 }
