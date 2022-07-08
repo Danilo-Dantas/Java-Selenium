@@ -9,7 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TesteAlert {
 
-private WebDriver driver;
+	private WebDriver driver;
+	private DSL dsl;
 	
 	@Before
 	public void inicializa() {
@@ -17,48 +18,49 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}
-	
+
 	@After
 	public void finaliza() {
 		driver.quit();
 	}
-	
+
 	@Test
 	public void deveInteragirComAlertSimples() {
 
-		driver.findElement(By.id("alert")).click();
+		dsl.clicarBotao("alert");
 		Alert alert = driver.switchTo().alert();
 		String texto = alert.getText();
 		Assert.assertEquals("Alert Simples", texto);
 		alert.accept();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
+		dsl.escreve("elementosForm:nome", texto);
 	}
 
 	@Test
 	public void deveInteragirComAlertConfirmAceitando() throws InterruptedException {
 
-		driver.findElement(By.id("confirm")).click();
+		dsl.clicarBotao("confirm");
 		Alert alertConfirm = driver.switchTo().alert();
 		alertConfirm.accept();
 		String texto = alertConfirm.getText();
 		alertConfirm.accept();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
+		dsl.escreve("elementosForm:nome", texto);
 	}
 
 	@Test
 	public void deveInteragirComAlertConfirmNegando() throws InterruptedException {
-		driver.findElement(By.id("confirm")).click();
+		dsl.clicarBotao("confirm");
 		Alert alertConfirm = driver.switchTo().alert();
 		alertConfirm.dismiss();
 		String texto = alertConfirm.getText();
 		alertConfirm.accept();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
+		dsl.escreve("elementosForm:nome", texto);
 	}
 
 	@Test
 	public void deveInteragirComAlertPrompt() throws InterruptedException {
-		driver.findElement(By.id("prompt")).click();
+		dsl.clicarBotao("prompt");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Digite um numero", alert.getText());
 		alert.sendKeys("22");
@@ -72,18 +74,3 @@ private WebDriver driver;
 		alert.accept();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

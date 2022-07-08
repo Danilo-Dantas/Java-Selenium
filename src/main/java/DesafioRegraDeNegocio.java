@@ -11,14 +11,16 @@ import org.openqa.selenium.support.ui.Select;
 
 public class DesafioRegraDeNegocio {
 
-private WebDriver driver;
-	
+	private WebDriver driver;
+	private DSL dsl;
+
 	@Before
 	public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:\\\\driver\\\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}
 	
 	@After
@@ -28,7 +30,7 @@ private WebDriver driver;
 	
 	@Test
 	public void testaNome() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
@@ -37,8 +39,8 @@ private WebDriver driver;
 	
 	@Test
 	public void testaSobrenome() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Danilo");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
@@ -48,24 +50,23 @@ private WebDriver driver;
 	
 	@Test
 	public void testaSexo() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Danilo");
+		dsl.escreve("elementosForm:sobrenome", "Danilo");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
 		alert.accept();
-		
 	}
 	
 	@Test
-	public void testaComida() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+	public void testaComida() throws InterruptedException {		
+		dsl.escreve("elementosForm:nome", "Danilo");
+		dsl.escreve("elementosForm:sobrenome", "Danilo");
+		dsl.clicaRadio("elementosForm:sexo:0");
+		dsl.clicaRadio("elementosForm:comidaFavorita:0");
+		dsl.clicaRadio("elementosForm:comidaFavorita:3");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
 		Thread.sleep(1000);
@@ -75,14 +76,12 @@ private WebDriver driver;
 	
 	@Test
 	public void testaEsporte() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-		Select multi = new Select(element);
-		multi.selectByIndex(0);
-		multi.selectByIndex(4);
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Danilo");
+		dsl.escreve("elementosForm:sobrenome", "Danilo");
+		dsl.clicaRadio("elementosForm:sexo:0");
+		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
+		dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
 		Thread.sleep(1000);

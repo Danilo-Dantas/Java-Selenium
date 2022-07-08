@@ -8,27 +8,29 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TesteFramesEJanelas {
-	
-private WebDriver driver;
-	
+
+	private WebDriver driver;
+	private DSL dsl;
+
 	@Before
 	public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:\\\\driver\\\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}
-	
+
 	@After
 	public void finaliza() {
 		driver.quit();
 	}
-	
+
 	@Test
 	public void deveInteragirComJanelas() throws InterruptedException {
 		driver.switchTo().frame("frame1");
 		Thread.sleep(2000);
-		driver.findElement(By.id("frameButton")).click();
+		dsl.clicarBotao("frameButton");
 		Alert alert = driver.switchTo().alert();
 		String textoAlert = alert.getText();
 		Assert.assertEquals("Frame OK!", textoAlert);
@@ -36,18 +38,18 @@ private WebDriver driver;
 		alert.accept();
 		Thread.sleep(2000);
 		driver.switchTo().defaultContent();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(textoAlert);
-
+		dsl.escreve("elementosForm:nome", textoAlert);
+		Thread.sleep(1000);
 	}
-	
+
 	@Test
 	public void deveInteragirComJanelasSemTitulo() throws InterruptedException {
-		driver.findElement(By.id("buttonPopUpHard")).click();
+		dsl.clicaRadio("buttonPopUpHard");
 		System.out.println(driver.getWindowHandle());
 		System.out.println(driver.getWindowHandles());
-		driver.switchTo().window((String)driver.getWindowHandles().toArray()[1]);
+		driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
 		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
-		driver.switchTo().window((String)driver.getWindowHandles().toArray()[0]);
+		driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
 		driver.findElement(By.tagName("textarea")).sendKeys("E agora?");
 	}
 }
