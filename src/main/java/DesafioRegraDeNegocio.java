@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -9,26 +11,32 @@ import org.openqa.selenium.support.ui.Select;
 
 public class DesafioRegraDeNegocio {
 
+private WebDriver driver;
+	
+	@Before
+	public void inicializa() {
+		System.setProperty("webdriver.chrome.driver", "C:\\\\driver\\\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
 	@Test
 	public void testaNome() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
 		alert.accept();
-		
-		Thread.sleep(2000);
-		driver.quit();
 	}
 	
 	@Test
 	public void testaSobrenome() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		Alert alert = driver.switchTo().alert();
@@ -36,15 +44,10 @@ public class DesafioRegraDeNegocio {
 		Thread.sleep(1000);
 		alert.accept();
 		
-		Thread.sleep(2000);
-		driver.quit();
 	}
 	
 	@Test
 	public void testaSexo() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
@@ -53,15 +56,10 @@ public class DesafioRegraDeNegocio {
 		Thread.sleep(1000);
 		alert.accept();
 		
-		Thread.sleep(2000);
-		driver.quit();
 	}
 	
 	@Test
 	public void testaComida() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -72,16 +70,11 @@ public class DesafioRegraDeNegocio {
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
 		Thread.sleep(1000);
 		alert.accept();
-		
-		Thread.sleep(2000);
-		driver.quit();
+
 	}
 	
 	@Test
 	public void testaEsporte() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C://driver/chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Dantas");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -94,8 +87,6 @@ public class DesafioRegraDeNegocio {
 		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
 		Thread.sleep(1000);
 		alert.accept();
-		
-		Thread.sleep(2000);
-		driver.quit();
+
 	}
 }
