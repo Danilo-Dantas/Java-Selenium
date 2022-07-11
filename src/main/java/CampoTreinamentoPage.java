@@ -20,8 +20,16 @@ public class CampoTreinamentoPage {
 		dsl.clicaRadio("elementosForm:sexo:0");
 	}
 	
+	public void setComidaCarne() {
+		dsl.clicaRadio("elementosForm:comidaFavorita:0");
+	}
+	
 	public void setComidaPizza() {
 		dsl.clicaRadio("elementosForm:comidaFavorita:2");
+	}
+	
+	public void setComidaVegano() {
+		dsl.clicaRadio("elementosForm:comidaFavorita:3");
 	}
 	
 	public void setEscolaridade(String valor) {
@@ -43,4 +51,6 @@ public class CampoTreinamentoPage {
 	public String obterResultado() {
 		return dsl.obterTexto("resultado");
 	}
+	
+	
  }

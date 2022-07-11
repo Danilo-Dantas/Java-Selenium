@@ -3,17 +3,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class DesafioRegraDeNegocio {
 
 	private WebDriver driver;
 	private DSL dsl;
-
+	private CampoTreinamentoPage page;
+	
 	@Before
 	public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:\\\\driver\\\\chromedriver.exe");
@@ -21,6 +19,7 @@ public class DesafioRegraDeNegocio {
 		driver.manage().window().maximize();
 		driver.get(System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 	
 	@After
@@ -30,7 +29,7 @@ public class DesafioRegraDeNegocio {
 	
 	@Test
 	public void testaNome() throws InterruptedException {
-		dsl.clicarBotao("elementosForm:cadastrar");
+		page.cadastrar();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
@@ -39,8 +38,8 @@ public class DesafioRegraDeNegocio {
 	
 	@Test
 	public void testaSobrenome() throws InterruptedException {
-		dsl.escreve("elementosForm:nome", "Danilo");
-		dsl.clicarBotao("elementosForm:cadastrar");
+		page.setNome("Danilo");
+		page.cadastrar();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
@@ -50,9 +49,9 @@ public class DesafioRegraDeNegocio {
 	
 	@Test
 	public void testaSexo() throws InterruptedException {
-		dsl.escreve("elementosForm:nome", "Danilo");
-		dsl.escreve("elementosForm:sobrenome", "Danilo");
-		dsl.clicarBotao("elementosForm:cadastrar");
+		page.setNome("Danilo");
+		page.setSobrenome("Dantas");
+		page.cadastrar();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
 		Thread.sleep(1000);
@@ -61,12 +60,12 @@ public class DesafioRegraDeNegocio {
 	
 	@Test
 	public void testaComida() throws InterruptedException {		
-		dsl.escreve("elementosForm:nome", "Danilo");
-		dsl.escreve("elementosForm:sobrenome", "Danilo");
-		dsl.clicaRadio("elementosForm:sexo:0");
-		dsl.clicaRadio("elementosForm:comidaFavorita:0");
-		dsl.clicaRadio("elementosForm:comidaFavorita:3");
-		dsl.clicarBotao("elementosForm:cadastrar");
+		page.setNome("Danilo");
+		page.setSobrenome("Dantas");
+		page.setSexoMasculino();
+		page.setComidaCarne();
+		page.setComidaVegano();
+		page.cadastrar();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
 		Thread.sleep(1000);
@@ -76,12 +75,12 @@ public class DesafioRegraDeNegocio {
 	
 	@Test
 	public void testaEsporte() throws InterruptedException {
-		dsl.escreve("elementosForm:nome", "Danilo");
-		dsl.escreve("elementosForm:sobrenome", "Danilo");
-		dsl.clicaRadio("elementosForm:sexo:0");
-		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
-		dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
-		dsl.clicarBotao("elementosForm:cadastrar");
+		page.setNome("Danilo");
+		page.setSobrenome("Dantas");
+		page.setSexoMasculino();
+		page.setEsporte("Natacao");
+		page.setEsporte("O que eh esporte?");
+		page.cadastrar();
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
 		Thread.sleep(1000);
