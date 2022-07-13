@@ -38,13 +38,13 @@ public class TesteFramesEJanelas {
 		alert.accept();
 		Thread.sleep(2000);
 		driver.switchTo().defaultContent();
-		dsl.escreve("elementosForm:nome", textoAlert);
+		dsl.escrever("elementosForm:nome", textoAlert);
 		Thread.sleep(1000);
 	}
 
 	@Test
 	public void deveInteragirComJanelasSemTitulo() throws InterruptedException {
-		dsl.clicaRadio("buttonPopUpHard");
+		dsl.clicarRadio("buttonPopUpHard");
 		System.out.println(driver.getWindowHandle());
 		System.out.println(driver.getWindowHandles());
 		driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);

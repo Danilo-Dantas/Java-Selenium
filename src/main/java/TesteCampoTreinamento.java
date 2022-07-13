@@ -32,25 +32,25 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void testeTextField() {
-		dsl.escreve("elementosForm:nome", "Teste de escrita");
+		dsl.escrever("elementosForm:nome", "Teste de escrita");
 		Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
 	}
 	
 	@Test
 	public void deveInteragirComTextArea() {
-		dsl.escreve("elementosForm:sugestoes", "teste\\naaaaa");
+		dsl.escrever("elementosForm:sugestoes", "teste\\naaaaa");
 		Assert.assertEquals("teste", dsl.obterValorCampo("elementosForm:sugestoes"));
 	}
 	
 	@Test
 	public void deveInteragirComRadioButton() {
-		dsl.clicaRadio("elementosForm:sexo:0");
+		dsl.clicarRadio("elementosForm:sexo:0");
 		Assert.assertTrue(dsl.isRadioMarcado("elementosForm:sexo:0"));
 	}
 	
 	@Test
 	public void testeRadioButtonCheckBox() {
-		dsl.clicaRadio("elementosForm:comidaFavorita:2");
+		dsl.clicarRadio("elementosForm:comidaFavorita:2");
 		Assert.assertTrue(dsl.isRadioMarcado("elementosForm:comidaFavorita:2"));
 	}
 	
@@ -120,7 +120,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void testeComErro() {
-		dsl.escreve("elementosForm:nome", "Testee de escrita");
+		dsl.escrever("elementosForm:nome", "Testee de escrita");
 		Assert.assertEquals("Teste de erro", dsl.obterValorCampo("elementosForm:nome"));
 	}
 }

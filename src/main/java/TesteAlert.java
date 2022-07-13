@@ -34,7 +34,7 @@ public class TesteAlert {
 		String texto = alert.getText();
 		Assert.assertEquals("Alert Simples", texto);
 		alert.accept();
-		dsl.escreve("elementosForm:nome", texto);
+		dsl.escrever("elementosForm:nome", texto);
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class TesteAlert {
 		alertConfirm.accept();
 		String texto = alertConfirm.getText();
 		alertConfirm.accept();
-		dsl.escreve("elementosForm:nome", texto);
+		dsl.escrever("elementosForm:nome", texto);
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class TesteAlert {
 		alertConfirm.dismiss();
 		String texto = alertConfirm.getText();
 		alertConfirm.accept();
-		dsl.escreve("elementosForm:nome", texto);
+		dsl.escrever("elementosForm:nome", texto);
 	}
 
 	@Test
