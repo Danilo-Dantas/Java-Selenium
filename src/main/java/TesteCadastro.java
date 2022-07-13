@@ -41,7 +41,7 @@ public class TesteCadastro {
 		Assert.assertEquals("Sobrenome: Dantas" , page.obterSobrenomeCadastrado());
 		Assert.assertEquals("Sexo: Masculino", page.obterSexoCadastro());
 		Assert.assertEquals("Comida: Pizza", page.obterComidaCadastro());
-		Assert.assertEquals("Escolaridade: Superior", page.obterEscolaridadeCadastro());
+		Assert.assertEquals("Escolaridade: superior", page.obterEscolaridadeCadastro());
 		Assert.assertEquals("Esportes: Natacao", page.obterEsportesCadastrado());
 	}
 	
