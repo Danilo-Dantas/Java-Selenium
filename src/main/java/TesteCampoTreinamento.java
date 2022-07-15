@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,7 +27,7 @@ public class TesteCampoTreinamento {
 	
 	@After
 	public void finaliza() {
-		driver.quit();
+//		driver.quit();
 	}
 	
 	
@@ -123,6 +124,17 @@ public class TesteCampoTreinamento {
 	public void testeComErro() {
 		dsl.escrever("elementosForm:nome", "Testee de escrita");
 		Assert.assertEquals("Teste de erro", dsl.obterValorCampo("elementosForm:nome"));
+	}
+	
+	@Test
+	public void testJavascript() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+//		js.executeScript("alert('Testando js via selenium')");
+		js.executeScript("document.getElementById('elementosForm:nome').value = 'Escrito via js'");
+		js.executeScript("document.getElementById('elementosForm:sobrenome').type = 'radio'");
+		
+		WebElement element = driver.findElement(By.id("elementosForm:nome"));
+		js.executeScript("arguments[0].style.border = arguments[1]", element, "solid 4px red");
 	}
 }
 
