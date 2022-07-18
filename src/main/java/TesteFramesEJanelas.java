@@ -51,7 +51,6 @@ public class TesteFramesEJanelas {
 		dsl.clicarBotao("frameButton");
 		String msg = dsl.alertaObterTextoEAceita();
 		Assert.assertEquals("Frame OK!", msg);
-		
 	}
 
 	@Test
@@ -62,6 +61,6 @@ public class TesteFramesEJanelas {
 		driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
 		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
 		driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-		driver.findElement(By.tagName("textarea")).sendKeys("E agora?");
+		driver.findElement(By.tagName("textarea")).sendKeys("E agora?");  
 	}
 }

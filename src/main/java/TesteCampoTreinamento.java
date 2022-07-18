@@ -136,6 +136,11 @@ public class TesteCampoTreinamento {
 		WebElement element = driver.findElement(By.id("elementosForm:nome"));
 		js.executeScript("arguments[0].style.border = arguments[1]", element, "solid 4px red");
 	}
+	
+	@Test
+	public void deveClicarBotaoTabela() {
+		dsl.clicarBotaoTabela("Nome", "Francisco", "Botao", "elementosForm:tableUsuarios");
+	}
 }
 
 
