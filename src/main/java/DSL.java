@@ -102,11 +102,20 @@ public class DSL {
 		}
 		return false;
 	}
+	
+	public void selecionarComboPrime(String radical, String valor) {
+		clicarRadio(By.xpath("//*[@id='"+ radical +"']/..//span"));
+		clicarRadio(By.xpath("//*[@id='j_idt311:option_panel']//*[.='" + valor + "']"));
+	}
 
 	/********* Botao ************/
 
+	public void clicarBotao(By by) {
+		driver.findElement(by).click();
+	}
+	
 	public void clicarBotao(String id) {
-		driver.findElement(By.id(id)).click();
+		clicarBotao(By.id(id));
 	}
 
 	public String obterValueElemento(String id) {
