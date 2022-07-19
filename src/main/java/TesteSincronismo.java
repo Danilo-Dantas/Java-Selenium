@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +26,17 @@ public class TesteSincronismo {
 	}
 	
 	@Test
-	public void deveInteragirComRespostaDemorada() throws InterruptedException {
+	public void deveUtilizarEsperaFixa() throws InterruptedException {
 		dsl.clicarBotao("buttonDelay");
 		Thread.sleep(5000);
 		dsl.escrever("novoCampo", "Deu certo?");
+	}
+	
+	@Test
+	public void deveUtilizarEsperaImplicita() throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		dsl.clicarBotao("buttonDelay");
+		dsl.escrever("novoCampo", "Deu certo?");
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 	}
 }
